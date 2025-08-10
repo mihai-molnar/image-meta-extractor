@@ -317,18 +317,70 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .meta-display {
+    margin-top: 20px;
+  }
+  
+  .meta-display h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .meta-section {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+  }
+  
+  .meta-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+  }
+  
   .meta-grid {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
   
   .meta-item {
     flex-direction: column;
     align-items: flex-start;
+    padding: 8px 12px;
+  }
+  
+  .label {
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+    margin-right: 0;
   }
   
   .value {
     text-align: left;
-    margin-top: 5px;
+    margin-top: 0;
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+  
+  .btn-link {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+  
+  .toggle-btn {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+  }
+  
+  .raw-data {
+    padding: 12px;
+    max-height: 300px;
+  }
+  
+  .raw-data pre {
+    font-size: 0.8rem;
+    line-height: 1.3;
   }
 }
 </style>

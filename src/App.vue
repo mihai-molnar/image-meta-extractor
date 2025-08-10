@@ -153,4 +153,34 @@ main {
   margin: 20px 0;
   border: 1px solid #fcc;
 }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  #app {
+    padding: 10px;
+  }
+  
+  header {
+    margin-bottom: 20px;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+  
+  header p {
+    font-size: 1rem;
+  }
+  
+  main {
+    padding: 20px 15px;
+    border-radius: 8px;
+  }
+  
+  .loading {
+    padding: 30px 15px;
+    font-size: 1.1rem;
+  }
+}
 </style>

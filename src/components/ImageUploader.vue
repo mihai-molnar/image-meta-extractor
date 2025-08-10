@@ -299,4 +299,60 @@ export default {
 .clear-btn:hover {
   background: #c82333;
 }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .drop-zone {
+    padding: 30px 15px;
+  }
+  
+  .drop-content .upload-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .drop-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+  
+  .drop-content p {
+    font-size: 0.95rem;
+  }
+  
+  .file-preview {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .preview-container {
+    flex-shrink: 0;
+  }
+  
+  .preview-image,
+  .file-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .file-info {
+    width: 100%;
+  }
+  
+  .file-info h4 {
+    font-size: 1.1rem;
+    word-break: break-all;
+  }
+  
+  .file-info p {
+    font-size: 0.9rem;
+  }
+  
+  .clear-btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+}
 </style>
