@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/meta-extractor/',
+  base: '/image-meta-extractor/',
   build: {
     outDir: 'dist'
   }
