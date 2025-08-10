@@ -24,15 +24,24 @@
       </div>
       
       <div v-else class="file-preview">
-        <img
-          v-if="previewUrl"
-          :src="previewUrl"
-          :alt="selectedFile.name"
-          class="preview-image"
-        />
+        <div class="preview-container">
+          <img
+            v-if="previewUrl"
+            :src="previewUrl"
+            :alt="selectedFile.name"
+            class="preview-image"
+          />
+          <div v-else class="file-icon">
+            <div class="icon-placeholder">
+              📷
+            </div>
+            <small>{{ getFileExtension(selectedFile.name).toUpperCase() }}</small>
+          </div>
+        </div>
         <div class="file-info">
           <h4>{{ selectedFile.name }}</h4>
           <p>{{ formatFileSize(selectedFile.size) }}</p>
+          <p v-if="!previewUrl" class="preview-note">Preview not available for this format</p>
           <button @click.stop="clearFile" class="clear-btn">
             ✕ Remove
           </button>
@@ -101,15 +110,20 @@ export default {
 
       selectedFile.value = file
       
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        previewUrl.value = e.target.result
+      // Handle HEIC files differently since browsers can't preview them natively
+      if (file.type === 'image/heic' || file.name.toLowerCase().endsWith('.heic')) {
+        previewUrl.value = null // Don't try to show preview for HEIC
+      } else {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          previewUrl.value = e.target.result
+        }
+        reader.onerror = () => {
+          alert('Error reading file. Please try again.')
+          clearFile()
+        }
+        reader.readAsDataURL(file)
       }
-      reader.onerror = () => {
-        alert('Error reading file. Please try again.')
-        clearFile()
-      }
-      reader.readAsDataURL(file)
 
       emit('file-selected', file)
     }
@@ -132,6 +146,10 @@ export default {
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
     }
 
+    const getFileExtension = (filename) => {
+      return filename.split('.').pop() || ''
+    }
+
     return {
       isDragOver,
       selectedFile,
@@ -143,7 +161,8 @@ export default {
       handleFileSelect,
       triggerFileInput,
       clearFile,
-      formatFileSize
+      formatFileSize,
+      getFileExtension
     }
   }
 }
@@ -213,12 +232,40 @@ export default {
   text-align: left;
 }
 
+.preview-container {
+  flex-shrink: 0;
+}
+
 .preview-image {
   width: 100px;
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
   border: 2px solid #ddd;
+}
+
+.file-icon {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  gap: 8px;
+}
+
+.icon-placeholder {
+  font-size: 2rem;
+}
+
+.file-icon small {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
 }
 
 .file-info h4 {
@@ -230,6 +277,12 @@ export default {
 .file-info p {
   color: #666;
   margin-bottom: 10px;
+}
+
+.preview-note {
+  color: #999 !important;
+  font-size: 0.9rem !important;
+  font-style: italic;
 }
 
 .clear-btn {
